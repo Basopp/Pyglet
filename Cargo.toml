@@ -1,0 +1,66 @@
+[package]
+name = "g4"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+cortex-m = "0.7.1"
+stm32g4 = {version =  "0.14.0", features = ["rt","stm32g473"]}
+cortex-m-rt = "0.6.10"
+cortex-m-rtfm = "0.5.1"
+cortex-m-semihosting = "0.3.5"
+cortex-m-log = { version = "0.7", features = ["log-integration"] }
+stm32g473-hal_oppe = {version ="0.1.0", features = ["rt","stm32g473"] }
+panic-semihosting = "0.6.0"
+
+usb-device = "0.2.1"
+usbd-serial = "0.1"
+stm32-usbd = "0.6.0"
+
+arrform = "0.1.1"
+ws2812-timer-delay = "0.3.0"
+smart-leds = "0.3.0"
+
+[dependencies.cast]
+version = "0.2.7"
+default-features = false
+
+[dependencies.bare-metal]
+features = ["const-fn"]
+version = "0.2.5"
+
+[dependencies.embedded-hal]
+features = ["unproven"]
+version = "0.2.4"
+
+[dependencies.embedded-dma]
+version = "0.1.2"
+
+[dependencies.void]
+default-features = false
+version = "1.0.2"
+
+
+#TODO: Separate feature sets
+[features]
+default = ["rt","stm32g473"]
+rt = ["stm32g4/rt"]
+stm32g473 = ["stm32g4/stm32g473"]
+log-itm = ["cortex-m-log/itm"]
+log-rtt = []
+log-semihost = ["cortex-m-log/semihosting"]
+
+
+[profile.dev]
+codegen-units = 1
+debug = true
+incremental = false
+lto = false
+
+[profile.release]
+debug = false
+codegen-units = 1
+incremental = false
+lto = true
